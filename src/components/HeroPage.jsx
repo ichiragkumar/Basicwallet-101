@@ -17,16 +17,10 @@ export const HeroPage = () => {
     setSelectedBlockchain("SOL");
   };
 
-  const handleCreateWallet = () => {
-    if (!selectedBlockchain) {
-      alert("Please select a blockchain (ETH or SOL) first.");
-      return;
-    }
-
-  };
+  
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-black to-gray-900 py-10">
+    <div className="flex flex-col items-center justify-start min-h-screen bg-gradient-to-r from-black to-gray-900 py-10">
       <p className="text-center text-white text-3xl sm:text-4xl font-semibold mt-5 px-6">
         <strong>SUPPORTS ETH & SOL</strong>
       </p>

@@ -57,7 +57,12 @@ export const Topbar = () => {
           />
         </div>
         <div className="text-base font-medium cursor-pointer">Web Based Wallet App</div>
-        <div className="text-sm cursor-pointer">V1.01</div>
+        <div className="text-sm cursor-pointer">
+          <div className='text-gray-700 flex items-center space-x-1 rounded-full border p-2' >
+            <strong className='text-xl line-height-1'>V</strong>
+            <div><p>1.1</p></div>
+          </div>
+        </div>
       </div>
 
 

@@ -3,7 +3,7 @@ import { mnemonicToSeed } from "bip39";
 import { derivePath } from "ed25519-hd-key";
 import { Keypair } from "@solana/web3.js";
 import nacl from "tweetnacl";
-import { Link } from "react-router-dom";
+import { HomePage } from "./HomePage";
 
 export const SolanaWallet = ({ mnemonic }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -27,71 +27,20 @@ export const SolanaWallet = ({ mnemonic }) => {
     const keypair = Keypair.fromSecretKey(secret);
 
 
-    setPublicKeys((prevKeys) => [...prevKeys, keypair.publicKey]);
-    setPrivateKeys((prevKeys) => [...prevKeys, secret.toString('hex')]);
+    setPublicKeys((prevKeys) => [...prevKeys, keypair.publicKey.toString()]);
+    setPrivateKeys((prevKeys) => [...prevKeys, secret.toString("hex")]);
     setSecretPhrases((prevPhrases) => [...prevPhrases, mnemonic]);
 
     setCurrentIndex(currentIndex + 1);
   };
 
-  const toggleDropdown = (index) => {
-    setIsDropdownOpen(isDropdownOpen === index ? null : index); 
+ 
+  const UserWalletDetails = {
+    walletName: "SOL",
+    publicWalletAddress: publicKeys[0],
+    privateWalletAddress: privateKeys[0],
+    secretPhrase: mnemonic,
   };
 
-  const truncateAddress = (address) => {
-    return `${address.slice(0, 5)}...${address.slice(-5)}`;
-  };
-
-  return (
-    <div className="text-white">
-      <div>
-        {publicKeys.length > 0 ? (
-          publicKeys.map((key, index) => (
-            <div key={index} className="relative flex items-center space-x-3 py-2">
-
-              <img
-                src="https://cryptologos.cc/logos/solana-sol-logo.svg"
-                alt="Solana Wallet"
-                className="w-6 h-6"
-              />
-
-              <span>{truncateAddress(key.toBase58())}</span>
-
-              <button
-                className="ml-2 text-blue-500"
-                onClick={() => toggleDropdown(index)} 
-              >
-                ▼
-              </button>
-
-
-              {isDropdownOpen === index && (
-                <div className="absolute bg-white text-black p-2 rounded-lg shadow-md mt-2">
-                  <div>
-                    <p className="text-sm">Public Key: {key.toBase58()}</p>
-                    <p className="text-sm">
-                      Private Key:{" "}
-                      <span className="text-xs">{privateKeys[index]}</span>
-                    </p>
-                    <p className="text-sm">
-                      Secret Phrase:{" "}
-                      <span className="text-xs">{secretPhrases[index]}</span>
-                    </p>
-                    <Link
-                      to="/userprofile"
-                      className="text-blue-500 text-xs"
-                    >
-                      View Profile
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))
-        ) : (
-          <p>Generating Solana wallet...</p>
-        )}
-      </div>
-    </div>
-  );
+  return <HomePage UserWalletDetails={UserWalletDetails} />;
 };

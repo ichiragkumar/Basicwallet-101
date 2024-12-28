@@ -27,7 +27,6 @@ export const Balance = () => {
         {balances.map((balance, index) => (
           <div key={index} className="bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 p-6 rounded-lg shadow-lg text-center transition-transform transform hover:scale-105">
           <img src={balance.icon} alt={balance.name} className="w-20 h-20 mb-4 mx-auto" />
-            {/* Display shortName if name is too long, otherwise display the full name */}
             <p className="text-xl font-semibold  w-full">
               {balance.name.length > 10 ? balance.shortName : balance.name}
             </p>

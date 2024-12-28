@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { mnemonicToSeed } from "bip39";
 import { HDNodeWallet } from "ethers"; 
 import { Wallet } from "ethers";
-import { Link } from "react-router-dom";
 
+import { Link, useNavigate } from "react-router-dom";
+import { HomePage } from "./HomePage";
 export const EthWallet = ({ mnemonic }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [addresses, setAddresses] = useState([]);
   const [privateKeys, setPrivateKeys] = useState([]);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(null); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (mnemonic) {
@@ -31,59 +32,13 @@ export const EthWallet = ({ mnemonic }) => {
     setPrivateKeys((prevPrivateKeys) => [...prevPrivateKeys, privateKey]);
   };
 
-  const toggleDropdown = (index) => {
-    setIsDropdownOpen(isDropdownOpen === index ? null : index); 
-  };
+  
+  const UserWalletDetails = {
+    walletName: "ETH",
+    publicWalletAddress: addresses[0],
+    privateWalletAddress: privateKeys[0],
+    secretPhrase: mnemonic,
+  }
 
-  const truncateAddress = (address) => {
-    return `${address.slice(0, 5)}...${address.slice(-5)}`;
-  };
-
-  return (
-    <div className="text-white">
-      <div>
-        {addresses.length > 0 ? (
-          addresses.map((address, index) => (
-            <div key={index} className="relative flex items-center space-x-3 py-2">
-              <img
-                src="https://cryptologos.cc/logos/ethereum-eth-logo.svg"
-                alt="Ethereum Wallet"
-                className="w-6 h-6"
-              />
-              <span>{truncateAddress(address)}</span>
-
-              <button
-                className="ml-2 text-blue-500"
-                onClick={() => toggleDropdown(index)} 
-              >
-                ▼
-              </button>
-
-
-              {isDropdownOpen === index && (
-                <div className="absolute bg-white text-black p-2 rounded-lg shadow-md mt-2">
-                  <div>
-                    <p className="text-sm">ETH Address: {address}</p>
-                    <p className="text-sm">
-                      Private Key:{" "}
-                      <span className="text-xs">{privateKeys[index]}</span>
-                    </p>
-                    <p className="text-sm">
-                      Secret Phrase:{" "}
-                      <span className="text-xs">{mnemonic}</span>
-                    </p>
-                    <Link to="/userprofile" className="text-blue-500 text-xs">
-                      View Profile
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))
-        ) : (
-          <p>Generating ETH wallet...</p> 
-        )}
-      </div>
-    </div>
-  );
+  return <HomePage UserWalletDetails={UserWalletDetails} />;
 };

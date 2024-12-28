@@ -9,6 +9,7 @@ import { UserProfile } from './components/User/UserProfile';
 import { EthWallet } from './components/EthWallet';
 import { SolanaWallet } from './components/SolanaWallet';
 function App() {
+  
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
