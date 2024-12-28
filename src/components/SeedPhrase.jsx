@@ -1,5 +1,5 @@
 import React from 'react';
-
+import download from '../assets/downloadseedphrase.png';
 export const SeedPhrase = ({ mnemonic }) => {
   const mnemonicWords = mnemonic.split(' '); 
 
@@ -7,10 +7,28 @@ export const SeedPhrase = ({ mnemonic }) => {
     navigator.clipboard.writeText(mnemonic);
   }
 
+  function handleToDownloadSeedPhrase() {
+    const element = document.createElement('a');
+    const file = new Blob([mnemonic], { type: 'text/plain' });
+    element.href = URL.createObjectURL(file);
+    element.download = 'seedphrase.txt';
+    document.body.appendChild(element);
+    element.click();
+  }
+
   return (
     <div className="mt-4 p-6 bg-white shadow-lg rounded-lg w-full max-w-md text-center">
-      <p className="text-xl font-semibold mb-4">Your Seed Phrase</p>
-      <div className="grid grid-cols-3 gap-4 text-sm text-gray-700">
+       <div className="flex items-center justify-center space-x-4 mb-2">
+            <p className="text-xl font-semibold">Your Seed Phrase</p>
+            <img onClick={handleToDownloadSeedPhrase}
+                src={download}
+                alt="Download Seed Phrase"
+                className="w-6 h-6 bg-white rounded-full cursor-pointer transition duration-300 hover:scale-110"
+            />
+        </div>
+
+
+        <div className="grid grid-cols-3 gap-4 text-sm text-gray-700">
         {mnemonicWords.map((word, index) => (
           <div
             key={index}
