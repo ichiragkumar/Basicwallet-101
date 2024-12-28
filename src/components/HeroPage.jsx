@@ -37,6 +37,7 @@ export const HeroPage = () => {
         </div>
       </div>
 
+
       <SeedPhraseButton setMnemonic={setMnemonic} />
 
       {mnemonic && <SeedPhrase mnemonic={mnemonic} />}
