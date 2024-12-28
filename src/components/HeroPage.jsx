@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { SeedPhraseButton } from "./SeedPhraseButton";
-import { SeedPhrase } from "./SeedPhrase";
+import { SeedPhrase } from "./SeedPhrase"; // Ensure SeedPhrase is properly imported
 
 export const HeroPage = () => {
-  const [mnemonic, setMnemonic] = useState("");
+  const [mnemonic, setMnemonic] = useState(""); // Handle mnemonic state
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-black to-gray-900 py-10">
@@ -37,10 +37,9 @@ export const HeroPage = () => {
         </div>
       </div>
 
+      <SeedPhraseButton setMnemonic={setMnemonic} /> {/* Pass setMnemonic to SeedPhraseButton */}
 
-      <SeedPhraseButton setMnemonic={setMnemonic} />
-
-      {mnemonic && <SeedPhrase mnemonic={mnemonic} />}
+      {mnemonic && <SeedPhrase mnemonic={mnemonic} />} {/* Show SeedPhrase when mnemonic is set */}
     </div>
   );
 };

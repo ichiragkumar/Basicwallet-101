@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { generateMnemonic } from "bip39";
 
 export const SeedPhraseButton = ({ setMnemonic }) => {
