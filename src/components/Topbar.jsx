@@ -5,10 +5,10 @@ import lightTheme from '../assets/light.png';
 import settings from '../assets/settings.png';
 
 export const Topbar = () => {
-  // State for managing dark or light theme
+
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  // Effect to persist theme selection in localStorage
+
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
@@ -16,7 +16,7 @@ export const Topbar = () => {
     }
   }, []);
 
-  // Toggle the theme
+
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => {
       const newMode = !prevMode;

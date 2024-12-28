@@ -1,9 +1,29 @@
 import React, { useState } from "react";
 import { SeedPhraseButton } from "./SeedPhraseButton";
-import { SeedPhrase } from "./SeedPhrase"; // Ensure SeedPhrase is properly imported
+import { SeedPhrase } from "./SeedPhrase"; 
+import { EthWallet } from './EthWallet'; 
+import { SolanaWallet } from './SolanaWallet'; 
 
 export const HeroPage = () => {
-  const [mnemonic, setMnemonic] = useState(""); // Handle mnemonic state
+  const [mnemonic, setMnemonic] = useState(""); 
+  const [selectedBlockchain, setSelectedBlockchain] = useState(null);
+
+
+  const handleEthWallet = () => {
+    setSelectedBlockchain("ETH"); 
+  };
+
+  const handleSolanaWallet = () => {
+    setSelectedBlockchain("SOL");
+  };
+
+  const handleCreateWallet = () => {
+    if (!selectedBlockchain) {
+      alert("Please select a blockchain (ETH or SOL) first.");
+      return;
+    }
+
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-black to-gray-900 py-10">
@@ -15,9 +35,14 @@ export const HeroPage = () => {
         Start your journey by selecting your preferred blockchain.
       </p>
 
-      <div className="flex flex-col sm:flex-row justify-center items-center space-y-6 sm:space-x-6 sm:space-y-0">
-        {/* Ethereum */}
-        <div className="text-center bg-white p-6 rounded-lg shadow-lg transition transform hover:scale-105 hover:shadow-2xl">
+
+      <div className="flex flex-col sm:flex-row justify-center items-center space-y-6 sm:space-x-6 sm:space-y-0 ">
+        <div 
+          onClick={handleEthWallet} 
+          className={`text-center bg-white p-6 rounded-lg shadow-lg transition transform hover:scale-105 hover:shadow-2xl cursor-pointer ${
+            selectedBlockchain === "ETH" ? "border-4 border-blue-500" : ""
+          }`}
+        >
           <div className="text-xl font-semibold text-gray-800">ETH</div>
           <img
             src="https://cryptologos.cc/logos/ethereum-eth-logo.svg"
@@ -26,8 +51,12 @@ export const HeroPage = () => {
           />
         </div>
 
-        {/* Solana */}
-        <div className="text-center bg-white p-6 rounded-lg shadow-lg transition transform hover:scale-105 hover:shadow-2xl">
+        <div 
+          onClick={handleSolanaWallet} 
+          className={`text-center bg-white p-6 rounded-lg shadow-lg transition transform hover:scale-105 hover:shadow-2xl cursor-pointer ${
+            selectedBlockchain === "SOL" ? "border-4 border-green-500" : ""
+          }`}
+        >
           <div className="text-xl font-semibold text-gray-800">SOL</div>
           <img
             src="https://cryptologos.cc/logos/solana-sol-logo.svg"
@@ -37,9 +66,25 @@ export const HeroPage = () => {
         </div>
       </div>
 
-      <SeedPhraseButton setMnemonic={setMnemonic} /> {/* Pass setMnemonic to SeedPhraseButton */}
+      {mnemonic && <SeedPhrase mnemonic={mnemonic} />} 
 
-      {mnemonic && <SeedPhrase mnemonic={mnemonic} />} {/* Show SeedPhrase when mnemonic is set */}
+
+      {!selectedBlockchain && (
+        <p className="text-center text-white text-lg sm:text-xl mt-3 px-6">
+          Please select either Ethereum (ETH) or Solana (SOL) to create a wallet.
+        </p>
+      )}
+
+
+      {selectedBlockchain === "ETH" && mnemonic && <EthWallet mnemonic={mnemonic} />}
+      {selectedBlockchain === "SOL" && mnemonic && <SolanaWallet mnemonic={mnemonic} />}
+
+
+      {selectedBlockchain && (
+       
+      <SeedPhraseButton setMnemonic={setMnemonic} /> 
+
+      )}
     </div>
   );
 };
